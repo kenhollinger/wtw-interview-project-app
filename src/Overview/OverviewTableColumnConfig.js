@@ -25,7 +25,7 @@ export const overviewTableColumnConfig = [
     label: 'Status',
     dataKey: 'status',
     width: 100,
-    cellRenderer: (rowData) => rowData.status,
+    cellRenderer: (rowData) => rowData.status=== 1 ? 'Active' : rowData.status=== 2 ? 'InProgress': 'Inactive',
   },
   {
     label: '',

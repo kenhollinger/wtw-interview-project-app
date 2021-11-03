@@ -18,6 +18,7 @@ const StyledTableCellDiv = styled.div`
   min-width:${props => props.width}px;
   margin-top: 12px;
   margin-right: 15px;
+  color: ${props => props.color}
 `;
 
 const StyledTableHeaderDiv = styled(StyledTableRowDiv)`
@@ -27,7 +28,14 @@ const StyledTableHeaderDiv = styled(StyledTableRowDiv)`
 `;
 
 async function fetchAgentData() {
-  return await fetch('/Agent');
+  return await fetch('/GetAllAgents');
+}
+
+function getColor(status) {
+  if(status===1) return 'green';
+  if(status===2) return 'yellow';
+  if(status===3) return 'red';
+  return 'black';
 }
 
 function Row({ rowNumber, rowData, columnConfig, hasAlternatingRowColors }) {
@@ -35,7 +43,7 @@ function Row({ rowNumber, rowData, columnConfig, hasAlternatingRowColors }) {
     <StyledTableRowDiv backgroundColor={hasAlternatingRowColors && rowNumber % 2 === 0 ? 'lightgray' : 'none'}>
       {
         columnConfig.map((c, i) =>
-          <StyledTableCellDiv key={i} width={c.width}>
+          <StyledTableCellDiv key={i} width={c.width} color={ c.label==='Status' ? getColor(rowData.status) : 'black'} >
             {c.cellRenderer(rowData)}
           </StyledTableCellDiv>
         )}
